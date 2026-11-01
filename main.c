@@ -15,11 +15,22 @@
 #include "nrf_delay.h"
 #include "boards.h"
 
+void leds_switch(int i){
+    const int array[LEDS_NUMBER]={6,6,0,3};
+    for(int j=0;j<array[i];j++){
+    bsp_board_led_invert(i);
+    nrf_delay_ms(500);
+    bsp_board_led_invert(i);
+    nrf_delay_ms(500);
+    }
+ }
+
 /**
  * @brief Function for application main entry.
  */
 int main(void)
 {
+    
     /* Configure board. */
     bsp_board_init(BSP_INIT_LEDS);
 
@@ -28,59 +39,8 @@ int main(void)
     {
         for (int i = 0; i < LEDS_NUMBER; i++)
         {
-            switch(i){
-                case 0:
-                {
-                 int j=0;
-                 while(j<6)   
-                 {
-                     bsp_board_led_invert(i);
-                     nrf_delay_ms(500);
-                     bsp_board_led_invert(i);
-                     nrf_delay_ms(500);
-                     j++;
-                 }
-                 break;
-                
-                }
-                case 1:
-                {
-                    int j=0;
-                    while(j<6)   
-                    {
-                        bsp_board_led_invert(i);
-                        nrf_delay_ms(500);
-                        bsp_board_led_invert(i);
-                        nrf_delay_ms(500);
-                        j++;
-                    }
-                    break;
-                }
-                case 2:
-                {
-                    nrf_delay_ms(1000);
-                    break;
-                }
-                case 3:
-                {
-                  int j=0;
-                    while(j<3)   
-                    {
-                        bsp_board_led_invert(i);
-                        nrf_delay_ms(500);
-                        bsp_board_led_invert(i);
-                        nrf_delay_ms(500);
-                        j++;
-                    }
-                    break;
-
-                }
-            }
-          
+           leds_switch(i);
         }
     }
 }
 
-/**
- *@}
- **/
