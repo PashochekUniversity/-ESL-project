@@ -1,3 +1,6 @@
+#ifndef SWITHC_LEDS_H
+#define SWITHC_LEDS_H
+#endif
 void leds_switch(int i){
     const int array[LEDS_NUMBER]={6,6,0,3};
     for(int j=0;j<array[i];j++){
