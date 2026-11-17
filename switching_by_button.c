@@ -7,9 +7,9 @@
 
 extern volatile uint32_t sys_time_ms;
 
-static volatile bool     is_playing      = false;
+static volatile bool is_playing = false;
 static volatile uint32_t last_press_time = 0;
-static volatile uint8_t  click_count     = 0;
+static volatile uint8_t click_count = 0;
 
 static void button_handler(nrfx_gpiote_pin_t pin, nrf_gpiote_polarity_t action) {
     uint32_t now = sys_time_ms;

@@ -12,16 +12,16 @@ static nrfx_pwm_t m_pwm0 = NRFX_PWM_INSTANCE(0);
 static nrf_pwm_values_individual_t m_seq_values = {0, 0, 0, 0};
 static nrf_pwm_sequence_t const m_seq = {
     .values.p_individual = &m_seq_values,
-    .length              = NRF_PWM_VALUES_LENGTH(m_seq_values),
-    .repeats             = 0,
-    .end_delay           = 0
+    .length= NRF_PWM_VALUES_LENGTH(m_seq_values),
+    .repeats= 0,
+    .end_delay= 0
 };
 
 static const int blinks_target[4] = {6, 6, 0, 3};
 static int current_led   = 0;
 static int current_blink = 0;
-static int duty          = 0;
-static int step          = 20;
+static int duty= 0;
+static int step= 20;
 
 void leds_init(void) {
     nrf_gpio_cfg_output(PIN_LED1_GREEN);
@@ -42,11 +42,11 @@ void leds_init(void) {
             PIN_LED2_BLUE  | NRFX_PWM_PIN_INVERTED
         },
         .irq_priority = 7,
-        .base_clock   = NRF_PWM_CLK_1MHz,
-        .count_mode   = NRF_PWM_MODE_UP,
-        .top_value    = PWM_TOP_VALUE,
-        .load_mode    = NRF_PWM_LOAD_INDIVIDUAL,
-        .step_mode    = NRF_PWM_STEP_AUTO
+        .base_clock= NRF_PWM_CLK_1MHz,
+        .count_mode= NRF_PWM_MODE_UP,
+        .top_value = PWM_TOP_VALUE,
+        .load_mode= NRF_PWM_LOAD_INDIVIDUAL,
+        .step_mode= NRF_PWM_STEP_AUTO
     };
 
     m_seq_values.channel_0 = 0;
