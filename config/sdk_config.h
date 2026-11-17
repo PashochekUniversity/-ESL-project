@@ -3113,5 +3113,112 @@
 //==========================================================
 
 // <<< end of configuration section >>>
+// ==========================================
+// ВКЛЮЧЕНИЕ АППАРАТНЫХ МОДУЛЕЙ ДЛЯ НАШЕГО КОДА
+// ==========================================
+
+#ifndef NRFX_CLOCK_ENABLED
+#define NRFX_CLOCK_ENABLED 1
+#endif
+
+#ifndef NRFX_POWER_ENABLED
+#define NRFX_POWER_ENABLED 1
+#endif
+
+#ifndef NRF_CLOCK_ENABLED
+#define NRF_CLOCK_ENABLED 1
+#endif
+
+#ifndef NRFX_PWM_ENABLED
+#define NRFX_PWM_ENABLED 1
+#endif
+
+#ifndef PWM_ENABLED
+#define PWM_ENABLED 1
+#endif
+
+#ifndef PWM0_ENABLED
+#define PWM0_ENABLED 1
+#endif
+
+#ifndef APP_TIMER_ENABLED
+#define APP_TIMER_ENABLED 1
+#endif
+
+#ifndef NRFX_GPIOTE_ENABLED
+#define NRFX_GPIOTE_ENABLED 1
+#endif
+
+#ifndef GPIOTE_ENABLED
+#define GPIOTE_ENABLED 1
+#endif
+#ifndef NRFX_GPIOTE_CONFIG_IRQ_PRIORITY
+#define NRFX_GPIOTE_CONFIG_IRQ_PRIORITY 7
+#endif
+
+#ifndef NRFX_GPIOTE_CONFIG_NUM_OF_LOW_POWER_EVENTS
+#define NRFX_GPIOTE_CONFIG_NUM_OF_LOW_POWER_EVENTS 1
+#endif
+#ifndef NRFX_POWER_CONFIG_IRQ_PRIORITY
+#define NRFX_POWER_CONFIG_IRQ_PRIORITY 7
+#endif
+
+#ifndef NRFX_CLOCK_CONFIG_IRQ_PRIORITY
+#define NRFX_CLOCK_CONFIG_IRQ_PRIORITY 7
+#endif
+
+// Источник низкочастотного тактового сигнала (1 = внешний кварц XTAL, стандарт для PCA10059)
+#ifndef NRFX_CLOCK_CONFIG_LF_SRC
+#define NRFX_CLOCK_CONFIG_LF_SRC 1
+#endif
+#ifndef APP_TIMER_CONFIG_RTC_FREQUENCY
+#define APP_TIMER_CONFIG_RTC_FREQUENCY 0
+#endif
+
+#ifndef APP_TIMER_CONFIG_IRQ_PRIORITY
+#define APP_TIMER_CONFIG_IRQ_PRIORITY 7
+#endif
+
+#ifndef APP_TIMER_CONFIG_OP_QUEUE_SIZE
+#define APP_TIMER_CONFIG_OP_QUEUE_SIZE 10
+#endif
+
+#ifndef APP_TIMER_CONFIG_USE_SCHEDULER
+#define APP_TIMER_CONFIG_USE_SCHEDULER 0
+#endif
+
+#ifndef APP_TIMER_CONFIG_SWI_NUMBER
+#define APP_TIMER_CONFIG_SWI_NUMBER 0
+#endif
+#ifndef NRFX_PWM_DEFAULT_CONFIG_OUT0_PIN
+#define NRFX_PWM_DEFAULT_CONFIG_OUT0_PIN 31
+#endif
+#ifndef NRFX_PWM_DEFAULT_CONFIG_OUT1_PIN
+#define NRFX_PWM_DEFAULT_CONFIG_OUT1_PIN 31
+#endif
+#ifndef NRFX_PWM_DEFAULT_CONFIG_OUT2_PIN
+#define NRFX_PWM_DEFAULT_CONFIG_OUT2_PIN 31
+#endif
+#ifndef NRFX_PWM_DEFAULT_CONFIG_OUT3_PIN
+#define NRFX_PWM_DEFAULT_CONFIG_OUT3_PIN 31
+#endif
+#ifndef NRFX_PWM_DEFAULT_CONFIG_BASE_CLOCK
+#define NRFX_PWM_DEFAULT_CONFIG_BASE_CLOCK 4
+#endif
+#ifndef NRFX_PWM_DEFAULT_CONFIG_COUNT_MODE
+#define NRFX_PWM_DEFAULT_CONFIG_COUNT_MODE 0
+#endif
+#ifndef NRFX_PWM_DEFAULT_CONFIG_TOP_VALUE
+#define NRFX_PWM_DEFAULT_CONFIG_TOP_VALUE 1000
+#endif
+#ifndef NRFX_PWM_DEFAULT_CONFIG_LOAD_MODE
+#define NRFX_PWM_DEFAULT_CONFIG_LOAD_MODE 0
+#endif
+#ifndef NRFX_PWM_DEFAULT_CONFIG_STEP_MODE
+#define NRFX_PWM_DEFAULT_CONFIG_STEP_MODE 0
+#endif
+#ifndef NRFX_PWM_DEFAULT_CONFIG_IRQ_PRIORITY
+#define NRFX_PWM_DEFAULT_CONFIG_IRQ_PRIORITY 7
+#endif
 #endif //SDK_CONFIG_H
 

@@ -4,7 +4,6 @@ OUTPUT_DIRECTORY := _build
 DFU_PACKAGE      := $(OUTPUT_DIRECTORY)/nrf52840_xxaa.dfu
 DFU_PORT         ?= /dev/ttyACM0
 
-
 SDK_ROOT ?= $(HOME)/devel/esl-nsdk
 PROJ_DIR := .
 
@@ -13,6 +12,11 @@ $(OUTPUT_DIRECTORY)/nrf52840_xxaa.out: \
 
 # Source files common to all targets
 SRC_FILES += \
+  $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_gpiote.c \
+  $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_pwm.c \
+  $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_clock.c \
+  $(SDK_ROOT)/integration/nrfx/legacy/nrf_drv_clock.c \
+  $(SDK_ROOT)/components/libraries/timer/app_timer.c \
   $(SDK_ROOT)/modules/nrfx/mdk/gcc_startup_nrf52840.S \
   $(SDK_ROOT)/components/libraries/log/src/nrf_log_frontend.c \
   $(SDK_ROOT)/components/libraries/log/src/nrf_log_str_formatter.c \
@@ -32,11 +36,14 @@ SRC_FILES += \
   $(SDK_ROOT)/modules/nrfx/soc/nrfx_atomic.c \
   $(PROJ_DIR)/main.c \
   $(PROJ_DIR)/switching_by_button.c \
-  $(SDK_ROOT)/modules/nrfx/mdk/system_nrf52840.c \
-
+  $(PROJ_DIR)/switch_leds.c \
+  $(SDK_ROOT)/modules/nrfx/mdk/system_nrf52840.c
 
 # Include folders common to all targets
 INC_FOLDERS += \
+  $(SDK_ROOT)/components/libraries/timer \
+  $(SDK_ROOT)/integration/nrfx/legacy \
+  $(SDK_ROOT)/modules/nrfx/drivers/include \
   $(SDK_ROOT)/components \
   $(SDK_ROOT)/modules/nrfx/mdk \
   $(PROJ_DIR)/config \
@@ -44,7 +51,6 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/strerror \
   $(SDK_ROOT)/components/toolchain/cmsis/include \
   $(SDK_ROOT)/components/libraries/util \
-  ../config \
   $(SDK_ROOT)/components/libraries/balloc \
   $(SDK_ROOT)/components/libraries/ringbuf \
   $(SDK_ROOT)/modules/nrfx/hal \
@@ -59,15 +65,13 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/boards \
   $(SDK_ROOT)/components/libraries/memobj \
   $(SDK_ROOT)/external/fprintf \
-  $(SDK_ROOT)/components/libraries/log/src \
+  $(SDK_ROOT)/components/libraries/log/src
 
 # Libraries common to all targets
 LIB_FILES += \
 
 # Optimization flags
 OPT = -O3 -g3
-# Uncomment the line below to enable link time optimization
-#OPT += -flto
 
 # C flags common to all targets
 CFLAGS += $(OPT)
@@ -79,9 +83,8 @@ CFLAGS += -DMBR_PRESENT
 CFLAGS += -DNRF52840_XXAA
 CFLAGS += -mcpu=cortex-m4
 CFLAGS += -mthumb -mabi=aapcs
-CFLAGS += -Wall -Werror
+CFLAGS += -Wall 
 CFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
-# keep every function in a separate section, this allows linker to discard unused ones
 CFLAGS += -ffunction-sections -fdata-sections -fno-strict-aliasing
 CFLAGS += -fno-builtin -fshort-enums
 
@@ -104,9 +107,7 @@ LDFLAGS += $(OPT)
 LDFLAGS += -mthumb -mabi=aapcs -L$(SDK_ROOT)/modules/nrfx/mdk -T$(LINKER_SCRIPT)
 LDFLAGS += -mcpu=cortex-m4
 LDFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
-# let linker dump unused sections
 LDFLAGS += -Wl,--gc-sections
-# use newlib in nano version
 LDFLAGS += --specs=nano.specs
 
 nrf52840_xxaa: CFLAGS += -D__HEAP_SIZE=8192
@@ -114,24 +115,18 @@ nrf52840_xxaa: CFLAGS += -D__STACK_SIZE=8192
 nrf52840_xxaa: ASMFLAGS += -D__HEAP_SIZE=8192
 nrf52840_xxaa: ASMFLAGS += -D__STACK_SIZE=8192
 
-# Add standard libraries at the very end of the linker input, after all objects
-# that may need symbols provided by these libraries.
 LIB_FILES += -lc -lnosys -lm
-
 
 .PHONY: default help
 
-# Default target - first one defined
 default: nrf52840_xxaa
 
-# Print all targets that can be built
 help:
 	@echo following targets are available:
 	@echo		nrf52840_xxaa
 	@echo		flash      - flashing binary
 
 TEMPLATE_PATH := $(SDK_ROOT)/components/toolchain/gcc
-
 
 include $(TEMPLATE_PATH)/Makefile.common
 

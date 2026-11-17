@@ -1,30 +1,21 @@
-
-/** @file
- *
- * @defgroup blinky_example_main main.c
- * @{
- * @ingroup blinky_example
- * @brief Blinky Example Application main file.
- *
- * This file contains the source code for a sample application to blink LEDs.
- *
- */
-
 #include <stdbool.h>
 #include <stdint.h>
-//#include "switch_leds.h"
-#include"switching_by_button.h"
+#include "nrf_delay.h"
+#include "switch_leds.h"
+#include "switching_by_button.h"
 
-/**
- * @brief Function for application main entry.
- */
-int main(void)
-{  
-    pin_settings();
-    while(true){
-        for(int i=0;i<4;i++){
-            switch_leds(i);
-        }
+
+volatile uint32_t sys_time_ms = 0;
+
+int main(void) {
+    leds_init();
+    button_init();
+
+    while (true) {
+        button_check_timeout();
+        leds_process(button_is_playing());
+        
+        nrf_delay_ms(10);
+        sys_time_ms += 10;
     }
 }
-

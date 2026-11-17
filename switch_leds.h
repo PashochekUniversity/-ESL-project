@@ -1,12 +1,9 @@
-#ifndef SWITHC_LEDS_H
-#define SWITHC_LEDS_H
-#endif
-void leds_switch(int i){
-    const int array[LEDS_NUMBER]={6,6,0,3};
-    for(int j=0;j<array[i];j++){
-    bsp_board_led_invert(i);
-    nrf_delay_ms(500);
-    bsp_board_led_invert(i);
-    nrf_delay_ms(500);
-    }
- }
+#ifndef SWITCH_LEDS_H
+#define SWITCH_LEDS_H
+
+#include <stdbool.h>
+
+void leds_init(void);
+void leds_process(bool is_playing);
+
+#endif // SWITCH_LEDS_H
