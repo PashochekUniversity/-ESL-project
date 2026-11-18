@@ -37,7 +37,7 @@ int main(void) {
     while (true) {
         while (app_usbd_event_queue_process())
         {
-            // Обработка событий USB-стека
+            
         }
 
         button_check_timeout();
