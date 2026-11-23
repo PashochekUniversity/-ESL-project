@@ -1,15 +1,14 @@
 #include <stdbool.h>
 #include <stdint.h>
-#include "nrf_delay.h"
 #include "nrf_drv_clock.h"
+#include "app_timer.h"
+#include "nrf_log_backend_usb.h"
 #include "app_usbd.h"
-#include "switch_leds.h"
+#include "hsv_controller.h"
 #include "switching_by_button.h"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
-
-volatile uint32_t sys_time_ms = 0;
 
 static void lfclk_init(void)
 {
@@ -22,30 +21,27 @@ static void lfclk_init(void)
     }
 }
 
-int main(void) {
+int main(void)
+{
     lfclk_init();
-    
-    ret_code_t err_code = NRF_LOG_INIT(NULL);
+
+    ret_code_t err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
+
+    err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
     NRF_LOG_DEFAULT_BACKENDS_INIT();
 
-    leds_init();
+    hsv_controller_init();
     button_init();
 
-    NRF_LOG_INFO("System started. Double-click button to start/pause.");
+    NRF_LOG_INFO("HSV Picker started");
 
-    while (true) {
-        while (app_usbd_event_queue_process())
-        {
-            
-        }
+    while (true)
+    {
+        LOG_BACKEND_USB_PROCESS();
 
-        button_check_timeout();
-        leds_process(button_is_playing());
-        
+
         NRF_LOG_PROCESS();
-
-        nrf_delay_ms(10);
-        sys_time_ms += 10;
     }
 }
